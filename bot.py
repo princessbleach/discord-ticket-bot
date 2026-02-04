@@ -8,9 +8,13 @@ load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
 GUILD_ID = int(os.getenv("GUILD_ID"))
 STAFF_ROLE_ID = int(os.getenv("STAFF_ROLE_ID"))
+PANEL_CHANNEL_ID = int(os.getenv("PANEL_CHANNEL_ID"))
+
 
 intents = discord.Intents.default()
+intents.message_content = True  # <-- add this line
 bot = commands.Bot(command_prefix="!", intents=intents)
+
 
 TICKET_CATEGORY_NAME = "Tickets"
 
@@ -99,12 +103,16 @@ async def on_ready():
 @commands.guild_only()
 @commands.has_permissions(administrator=True)
 async def ticketpanel(ctx: commands.Context):
+    if ctx.channel.id != PANEL_CHANNEL_ID:
+        return await ctx.send(f"Use this command in <#{PANEL_CHANNEL_ID}> only.")
+
     embed = discord.Embed(
         title="Support Tickets",
         description="Press the button to open a private ticket with staff.",
         color=discord.Color.blurple()
     )
     await ctx.send(embed=embed, view=TicketView())
+
 
 
 bot.run(TOKEN)
