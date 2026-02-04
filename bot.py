@@ -101,7 +101,7 @@ async def on_ready():
 
 @bot.command()
 @commands.guild_only()
-@commands.has_permissions(administrator=True)
+@commands.has_role("Ticket Reviewer")
 async def ticketpanel(ctx: commands.Context):
     if ctx.channel.id != PANEL_CHANNEL_ID:
         return await ctx.send(f"Use this command in <#{PANEL_CHANNEL_ID}> only.")
