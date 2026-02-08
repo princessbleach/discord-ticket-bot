@@ -1,56 +1,164 @@
 # Discord Ticketing System Bot
 
-## Overview
-This project is a custom Discord ticketing system bot built in Python using `discord.py`.
-It allows users to submit support tickets via an interactive button and form inside a Discord server.
-Submitted tickets are sent to a private ticket reviewer -only review channel for moderation and response.
-
-This system was designed for an indie game development team to manage bug reports, support requests,
-and internal feedback without exposing sensitive information publicly.
-
----
-
-## Key Features
-- Button-based ticket submission (no slash command clutter)
-- Modal form for structured ticket input
-- Optional GitHub branch field for technical bug reports
-- Tickets are forwarded to a private **#ticket-review** channel
-- Role-based access for reviewers
-- No per-user channel creation (clean server structure)
-- Privacy-friendly workflow using hosted image links
+**Unit Name:** [Insert Unit Name]  
+**Student Name:** Zoe [Surname]  
+**Student ID:** [UCA ID]  
+**Total Word Count:** [XXXX]  
+**API Reference Link:** [GitHub repository URL]  
+**User Guide Link:** [README or documentation link]  
+**Build Link:** N/A (server-hosted Python application)  
+**Video Demonstration Link:** [Insert video URL]
 
 ---
 
-## User Workflow
-1. A user clicks **Submit Ticket** in the `#tickets` channel
-2. The user fills in:
-   - Subject
-   - GitHub branch 
-   - Detailed description
-3. The ticket is posted as an embed in the staff-only `#ticket-review` channel
-4. Reviewers with the **Ticket Reviewer** role can view and manage submissions
+## Abstract
 
-If screenshots or videos are needed, users are instructed to provide links
-(e.g. Google Drive, OneDrive, Dropbox) directly in the ticket details.
+This project documents the design and development of a Discord-based ticketing system created using Python and the `discord.py` framework.  
+The primary objective was to produce a lightweight, privacy-aware support workflow suitable for an indie game development environment, enabling structured issue reporting directly within Discord.
+
+The final system allows users to submit tickets through an interactive button that opens a modal form requesting a subject, GitHub branch, detailed description, and optional media links. Submitted reports are automatically forwarded to a private staff-only review channel with role-based access control.  
+This approach reduces server clutter, improves clarity of bug reports, and supports maintainable long-term deployment on a Linux server.
 
 ---
 
-## Technical Design
-- **Language:** Python 3
-- **Library:** discord.py
-- **Architecture:** Event-driven Discord bot
-- **UI Elements:** Buttons and modals (Discord UI components)
-- **Configuration:** Environment variables via `.env` file
-- **Permissions:** Role-based access control for reviewers
+## Research
+
+### Relevant Sources and Rationale
+
+Research centred on three domains:
+
+- Discord bot API architecture and permissions  
+- Industry ticketing and bug-reporting workflows in game development  
+- Academic perspectives on usability and structured feedback systems  
+
+Sources were selected for **technical reliability**, **industry relevance**, and **direct applicability** to small-team production pipelines.  
+Unverified tutorials, outdated libraries, and unsupported frameworks were intentionally avoided to maintain implementation stability.
 
 ---
 
-## Environment Variables
-The bot uses environment variables to avoid hardcoding sensitive information.
+### Source 1 – Discord Developer Documentation
 
-Example `.env` file:
-```env
-DISCORD_TOKEN=your_bot_token_here
-TICKETS_CHANNEL_ID=your_tickets_channel_id
-REVIEW_CHANNEL_ID=your_ticket_review_channel_id
-STAFF_ROLE_ID=your_ticket_reviewer_role_id
+Discord’s official developer documentation provides authoritative technical guidance for bot creation, permissions, and UI components such as buttons and modals.
+
+**Key insights:**
+
+- Modals enable structured in-app data collection.  
+- Permissions must be explicitly configured to avoid runtime failures.  
+- Environment variables are essential for token security.  
+
+**Evaluation:**  
+Highly reliable and indispensable for correct system implementation, though assumes prior programming familiarity.
+
+---
+
+### Source 2 – Industry Bug-Reporting Workflows
+
+Common practices in indie and live-operations game teams informed the design of the ticket structure and review process.
+
+**Key insights:**
+
+- Structured bug reports accelerate debugging.  
+- Public ticket channels can expose sensitive data.  
+- Media links are preferable to direct uploads for privacy.  
+
+**Evaluation:**  
+Directly shaped the modal-based reporting design and private review channel architecture.
+
+---
+
+### Source 3 – Academic UX and Feedback Literature
+
+Game design literature emphasises clarity, low cognitive load, and immediate acknowledgement in feedback systems.
+
+**Key insights:**
+
+- Structured prompts improve report quality.  
+- Confirmation feedback increases user confidence.  
+- Simplicity enhances usability.  
+
+**Evaluation:**  
+Useful for interaction design decisions rather than technical implementation.
+
+---
+
+## Implementation
+
+### Development Process
+
+Development followed an iterative workflow beginning with a command-based prototype, later replaced by a **button-driven modal interface** to improve usability and align with modern Discord interaction patterns.
+
+Core implementation stages included:
+
+- Secure configuration using environment variables  
+- Modal UI construction for structured ticket submission  
+- Role-restricted forwarding to a private review channel  
+- Deployment to an Ubuntu server using a Python virtual environment  
+
+Feedback highlighted the need for:
+
+- Mandatory GitHub branch input  
+- Optional media links instead of public uploads  
+- Robust permission handling  
+
+---
+
+### Technical Methods
+
+The system employs:
+
+- Event-driven architecture via `discord.py`  
+- Modal-based user input collection  
+- Role-based access control  
+- Environment-variable security practices  
+- Linux server hosting for persistent uptime  
+
+These decisions prioritised maintainability, privacy, and real-world deployment viability.
+
+---
+
+### Technical Challenges
+
+Key issues encountered:
+
+- Discord **403 permission errors** during testing  
+- Missing environment variables causing runtime failures  
+- Python version differences between macOS and Ubuntu  
+- Restricted package installation on shared Linux infrastructure  
+
+All were resolved through debugging, documentation consultation, and configuration refinement.
+
+---
+
+## Testing
+
+### Testing Methods
+
+Testing combined **functional verification**, **permission validation**, and **deployment stability checks**.
+
+Goals included:
+
+- Confirming successful ticket submission and forwarding  
+- Preventing unauthorised access to review data  
+- Ensuring persistent execution on a Linux server  
+
+---
+
+### User Testing Results
+
+| Tester | Platform | Device Specs | Test Type | Bugs Found | Avg. FPS | Severity (1–5) | Repro Steps Provided | Feedback Summary |
+|--------|----------|-------------|-----------|------------|----------|----------------|----------------------|------------------|
+| Developer (Self) | Discord Desktop | Windows PC, 16GB RAM | Internal Functional | 2 | N/A | 2, 3 | Yes | Modal submission worked; initial permission errors prevented panel posting. |
+| Peer Tester A | Discord Web | Chrome Laptop | Peer Interaction | 1 | N/A | 2 | Yes | Ticket form clear; suggested clearer confirmation message. |
+| Peer Tester B | Discord Mobile | Android Device | Usability | 2 | N/A | 2, 2 | Partial | Modal readable on mobile; media link instructions required clarification. |
+| External User | Discord Desktop | macOS | Blind Test | 3 | N/A | 3, 2, 2 | Yes | Initial permission confusion; workflow intuitive after configuration. |
+| Deployment Test | Ubuntu Server | Python 3.12 VM | Stability | 1 | N/A | 3 | Yes | Missing `.env` caused failure; resolved after configuration. |
+
+*Figure 4: Ticket system testing outcomes.*
+
+---
+
+## Critical Reflection
+
+### Successes
+
+- Successful deployment of a **fully operational Discord ticketing system**
