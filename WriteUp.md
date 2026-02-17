@@ -150,11 +150,11 @@ Goals included:
 
 *Figure 4: Ticket system testing outcomes.*
 
-<img src="https://github.com/princessbleach/discord-ticket-bot/blob/main/Screenshot%202026-02-04%20at%2011.28.58.png?raw=true">
+<img src="(https://github.com/princessbleach/discord-ticket-bot/blob/main/discorderror.png?raw=true)">
 
 *Figure 5. Failed test due to permissions.*
 
-<img src="https://github.com/princessbleach/discord-ticket-bot/blob/main/Screenshot%202026-02-04%20at%2011.46.48.png?raw=true">
+<img src="https://github.com/princessbleach/discord-ticket-bot/blob/main/test.png?raw=true">
 
 *Figure 6. Working tests.*
 
