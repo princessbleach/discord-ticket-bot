@@ -1,5 +1,5 @@
 # Discord Ticket Bot  
-**User and Developer Manual**
+**User and developer manual**
 
 ## Overview  
 The Discord Ticket Bot is a Python-based support and review tool.  

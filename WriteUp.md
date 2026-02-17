@@ -1,17 +1,24 @@
 # Discord Ticketing System Bot
 
-**Unit Name:** [Tools and Production]  
+**Unit Name:** Tools and Production
+
 **Student Name:** Zoe Efstathiou  
+
 **Student ID:** 2423029 
+
+
+**User Guide Link:** [here](https://github.com/princessbleach/discord-ticket-bot/blob/main/Manual.Md)
+
+**Video Demonstration Link:** [here](/Users/zoeefstathiou/Documents/discord-ticket-bot/ticketbot-demonstration.mov)
 
 ---
 
 ## Abstract
 
 This project documents the design and development of a Discord-based ticketing system created using Python and the `discord.py` framework.  
-The primary objective was to produce a lightweight, privacy-aware support workflow suitable for an indie game development environment, enabling structured issue reporting directly within Discord.
+The primary objective was to produce a lightweight, privacy-aware support workflow suitable for our game enabling structured issue reporting directly within Discord.
 
-The final system allows users to submit tickets through an interactive button that opens a modal form requesting a subject, GitHub branch, detailed description, and optional media links. Submitted reports are automatically forwarded to a private staff-only review channel with role-based access control.  
+The final system allows users to submit tickets through an interactive button that opens a form requesting a subject, GitHub branch, detailed description, and optional media links. Submitted reports are automatically forwarded to a private staff-only review channel with role-based access control.  
 This approach reduces server clutter, improves clarity of bug reports, and supports maintainable long-term deployment on a Linux server.
 
 ---
@@ -26,27 +33,20 @@ Research centred on three domains:
 - Industry ticketing and bug-reporting workflows in game development  
 - Academic perspectives on usability and structured feedback systems  
 
-Sources were selected for **technical reliability**, **industry relevance**, and **direct applicability** to small-team production pipelines.  
-Unverified tutorials, outdated libraries, and unsupported frameworks were intentionally avoided to maintain implementation stability.
 
 ---
 
-### Source 1 – Discord Developer Documentation
+### Source 1 - Discord Developer Documentation
 
 Discord’s official developer documentation provides authoritative technical guidance for bot creation, permissions, and UI components such as buttons and modals.
 
-**Key insights:**
-
-- Modals enable structured in-app data collection.  
-- Permissions must be explicitly configured to avoid runtime failures.  
-- Environment variables are essential for token security.  
 
 **Evaluation:**  
 Highly reliable and indispensable for correct system implementation, though assumes prior programming familiarity.
 
 ---
 
-### Source 2 – Industry Bug-Reporting Workflows
+### Source 2 - Industry Bug-Reporting Workflows
 
 Common practices in indie and live-operations game teams informed the design of the ticket structure and review process.
 
@@ -61,7 +61,7 @@ Directly shaped the modal-based reporting design and private review channel arch
 
 ---
 
-### Source 3 – Academic UX and Feedback Literature
+### Source 3 - Academic UX and Feedback Literature
 
 Game design literature emphasises clarity, low cognitive load, and immediate acknowledgement in feedback systems.
 
@@ -80,7 +80,7 @@ Useful for interaction design decisions rather than technical implementation.
 
 ### Development Process
 
-Development followed an iterative workflow beginning with a command-based prototype, later replaced by a **button-driven modal interface** to improve usability and align with modern Discord interaction patterns.
+Development began with a command-based prototype, later replaced by a button-driven modal interface to improve usability and align with modern Discord interaction patterns.
 
 Core implementation stages included:
 
@@ -157,5 +157,7 @@ Goals included:
 <img src="https://github.com/princessbleach/discord-ticket-bot/blob/main/Screenshot%202026-02-04%20at%2011.46.48.png?raw=true">
 
 *Figure 6. Working tests.*
+
+
 
 ---
