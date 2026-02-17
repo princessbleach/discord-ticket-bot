@@ -9,7 +9,7 @@
 
 **User Guide Link:** [here](https://github.com/princessbleach/discord-ticket-bot/blob/main/Manual.Md)
 
-**Video Demonstration Link:** [here](https://github.com/princessbleach/discord-ticket-bot/blob/main/ticketbot-demonstration.mov))
+**Video Demonstration Link:** [here](https://github.com/princessbleach/discord-ticket-bot/blob/main/ticketbot-demonstration.mov)
 
 ---
 
