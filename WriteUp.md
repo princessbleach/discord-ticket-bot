@@ -154,7 +154,7 @@ Goals included:
 
 *Figure 5. Failed test due to permissions.*
 
-<img src="https://github.com/princessbleach/discord-ticket-bot/blob/main/test.png?raw=true">
+<img src="(https://github.com/princessbleach/discord-ticket-bot/blob/main/test.png?raw=true)">
 
 *Figure 6. Working tests.*
 
