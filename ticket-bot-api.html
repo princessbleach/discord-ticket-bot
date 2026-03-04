@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Discord Ticket Bot — API Specification</title>
+  <style>
+    :root{
+      --bg:#0b0d12; --panel:#121726; --text:#e8eaf0; --muted:#a8b0c2;
+      --accent:#8aa6ff; --border:#232a3d; --code:#0f1422;
+    }
+    body{
+      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background:var(--bg); color:var(--text); line-height:1.55;
+    }
+    header{
+      padding:32px 20px; border-bottom:1px solid var(--border);
+      background:linear-gradient(180deg, rgba(138,166,255,0.15), rgba(0,0,0,0));
+    }
+    .wrap{ max-width:980px; margin:0 auto; padding:0 20px; }
+    h1{ margin:0 0 8px; font-size:28px; letter-spacing:.2px; }
+    .sub{ color:var(--muted); margin:0; }
+    main{ padding:28px 0 60px; }
+    section{
+      background:var(--panel); border:1px solid var(--border);
+      border-radius:14px; padding:18px 18px; margin:14px 0;
+      box-shadow:0 8px 24px rgba(0,0,0,.25);
+    }
+    h2{ margin:0 0 10px; font-size:18px; }
+    h3{ margin:18px 0 8px; font-size:16px; color:var(--accent); }
+    p, li{ color:var(--text); }
+    .muted{ color:var(--muted); }
+    code, pre{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+    pre{
+      background:var(--code); border:1px solid var(--border);
+      padding:12px; border-radius:12px; overflow:auto; margin:10px 0;
+    }
+    .pill{
+      display:inline-block; padding:2px 10px; border-radius:999px;
+      background:rgba(138,166,255,0.12); border:1px solid rgba(138,166,255,0.35);
+      color:var(--accent); font-size:12px; margin-right:8px;
+    }
+    table{
+      width:100%; border-collapse:collapse; margin:10px 0;
+      border:1px solid var(--border); border-radius:12px; overflow:hidden;
+    }
+    th, td{
+      text-align:left; padding:10px 10px; border-bottom:1px solid var(--border);
+      vertical-align:top;
+    }
+    th{ background:rgba(255,255,255,0.03); color:var(--text); font-weight:600; }
+    tr:last-child td{ border-bottom:none; }
+    .grid{
+      display:grid; grid-template-columns:1fr; gap:12px;
+    }
+    @media (min-width: 860px){
+      .grid{ grid-template-columns:1fr 1fr; }
+    }
+    footer{ padding:18px 0; color:var(--muted); border-top:1px solid var(--border); }
+    a{ color:var(--accent); text-decoration:none; }
+    a:hover{ text-decoration:underline; }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="wrap">
+      <h1>Discord Ticket Bot — API Specification</h1>
+      <p class="sub">A documentation-style interface definition for a Discord ticket tool (spec only; implementation may be internal Python functions).</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <section>
+      <h2>1) Overview</h2>
+      <p>
+        The Discord Ticket Bot allows community members to submit support requests (e.g., bugs, feedback, reports) through Discord.
+        Tickets are posted to a private reviewer-only channel where staff can triage, comment, assign, and close issues.
+      </p>
+      <p class="muted">
+        Note: This document defines an API-style interface (a contract). In the current prototype, these calls can be implemented as
+        internal Python functions rather than real HTTP endpoints.
+      </p>
+    </section>
+
+    <section>
+      <h2>2) API Surface</h2>
+      <p class="muted">Base URL shown for documentation purposes: <code>https://api.example.com/v1</code></p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Method</th>
+            <th>Endpoint</th>
+            <th>Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="pill">POST</span></td>
+            <td><code>/tickets</code></td>
+            <td>Create a new ticket from a Discord modal/panel submission.</td>
+          </tr>
+          <tr>
+            <td><span class="pill">GET</span></td>
+            <td><code>/tickets</code></td>
+            <td>List/search tickets (filter by status/category).</td>
+          </tr>
+          <tr>
+            <td><span class="pill">GET</span></td>
+            <td><code>/tickets/{ticketId}</code></td>
+            <td>Fetch a ticket including messages/notes and metadata.</td>
+          </tr>
+          <tr>
+            <td><span class="pill">PATCH</span></td>
+            <td><code>/tickets/{ticketId}</code></td>
+            <td>Update triage fields (status, assignee, tags).</td>
+          </tr>
+          <tr>
+            <td><span class="pill">POST</span></td>
+            <td><code>/tickets/{ticketId}/messages</code></td>
+            <td>Add a message (requester reply or staff-only note).</td>
+          </tr>
+          <tr>
+            <td><span class="pill">POST</span></td>
+            <td><code>/tickets/{ticketId}/close</code></td>
+            <td>Close a ticket (shortcut endpoint).</td>
+          </tr>
+          <tr>
+            <td><span class="pill">POST</span></td>
+            <td><code>/tickets/{ticketId}/reopen</code></td>
+            <td>Reopen a ticket.</td>
+          </tr>
+          <tr>
+            <td><span class="pill">GET</span></td>
+            <td><code>/meta/categories</code></td>
+            <td>List allowed categories (keeps input validation consistent).</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>3) Usage Example</h2>
+      <p><strong>Scenario:</strong> User submits a ticket → bot stores it → reviewer closes it.</p>
+
+      <pre><code>[Discord User]
+   | submit modal
+   v
+[Bot] -- POST /tickets --&gt; [Ticket Store]
+   | &lt;-- ticketId --------
+   v
+[Private Review Channel Embed (ticketId + actions)]
+   |
+   | reviewer clicks Close
+   v
+[Bot] -- POST /tickets/{id}/close --&gt; [Ticket Store]</code></pre>
+
+      <h3>Example: Create Ticket</h3>
+      <p><span class="pill">POST</span><code>/tickets</code></p>
+
+      <pre><code>{
+  "source": "discord",
+  "guildId": "123456789012345678",
+  "requesterUserId": "998877665544332211",
+  "category": "Bug",
+  "title": "Footstep sounds missing on snow",
+  "description": "Footsteps do not play when walking on snow. Happens after respawn."
+}</code></pre>
+
+      <p class="muted">Response (201 Created)</p>
+      <pre><code>{
+  "ticketId": "t_8f31c2",
+  "status": "OPEN",
+  "createdAt": "2026-03-04T12:45:00Z"
+}</code></pre>
+    </section>
+
+    <section>
+      <h2>4) API Reference</h2>
+
+      <h3>Create Ticket</h3>
+      <p><span class="pill">POST</span><code>/tickets</code> — Creates a new ticket and returns its identifier.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Parameter</th>
+            <th>Type</th>
+            <th>Required</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>source</code></td>
+            <td>string</td>
+            <td>Yes</td>
+            <td>Input source, e.g. <code>"discord"</code>.</td>
+          </tr>
+          <tr>
+            <td><code>guildId</code></td>
+            <td>string</td>
+            <td>Yes</td>
+            <td>Discord server ID scope.</td>
+          </tr>
+          <tr>
+            <td><code>requesterUserId</code></td>
+            <td>string</td>
+            <td>Yes</td>
+            <td>Discord user ID of the requester.</td>
+          </tr>
+          <tr>
+            <td><code>category</code></td>
+            <td>string</td>
+            <td>Yes</td>
+            <td>Ticket category (e.g., Bug, Feedback, Report).</td>
+          </tr>
+          <tr>
+            <td><code>title</code></td>
+            <td>string</td>
+            <td>Yes</td>
+            <td>Short summary line.</td>
+          </tr>
+          <tr>
+            <td><code>description</code></td>
+            <td>string</td>
+            <td>Yes</td>
+            <td>Full ticket description.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p><strong>Returns</strong></p>
+      <table>
+        <thead>
+          <tr>
+            <th>Field</th>
+            <th>Type</th>
+            <th>Meaning</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>ticketId</code></td>
+            <td>string</td>
+            <td>Unique identifier used in embeds, logs, and follow-up actions.</td>
+          </tr>
+          <tr>
+            <td><code>status</code></td>
+            <td>string</td>
+            <td>Initial ticket state (typically <code>OPEN</code>).</td>
+          </tr>
+          <tr>
+            <td><code>createdAt</code></td>
+            <td>string (ISO-8601)</td>
+            <td>Creation time.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p><strong>Errors / Failure Cases</strong></p>
+      <ul>
+        <li><code>400 Bad Request</code> — missing title/description, category invalid.</li>
+        <li><code>401 Unauthorized</code> — missing/invalid auth (if secured).</li>
+        <li><code>403 Forbidden</code> — user/service lacks permission for that guild.</li>
+        <li><code>429 Too Many Requests</code> — spam/rate limiting triggered.</li>
+        <li><code>500 Internal Server Error</code> — unexpected failure (e.g., storage error).</li>
+      </ul>
+
+      <h3>Update Ticket</h3>
+      <p><span class="pill">PATCH</span><code>/tickets/{ticketId}</code> — Updates ticket triage fields (partial update).</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Parameter</th>
+            <th>Type</th>
+            <th>Required</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>status</code></td>
+            <td>string</td>
+            <td>No</td>
+            <td><code>OPEN</code> | <code>IN_PROGRESS</code> | <code>CLOSED</code></td>
+          </tr>
+          <tr>
+            <td><code>assigneeUserId</code></td>
+            <td>string or null</td>
+            <td>No</td>
+            <td>Reviewer Discord ID, or null to unassign.</td>
+          </tr>
+          <tr>
+            <td><code>tags</code></td>
+            <td>array&lt;string&gt;</td>
+            <td>No</td>
+            <td>Labels like <code>audio</code>, <code>ui</code>, <code>networking</code>.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p><strong>Errors</strong></p>
+      <ul>
+        <li><code>404 Not Found</code> — ticketId does not exist.</li>
+        <li><code>409 Conflict</code> — invalid state transition (e.g., already closed).</li>
+        <li><code>403 Forbidden</code> — caller not in reviewer role.</li>
+      </ul>
+
+      <h3>Close Ticket</h3>
+      <p><span class="pill">POST</span><code>/tickets/{ticketId}/close</code> — Closes ticket and stores who closed it.</p>
+
+      <pre><code>{
+  "closedByUserId": "112233445566778899",
+  "reason": "Reproduced and fixed in next build"
+}</code></pre>
+
+      <p><strong>Errors</strong></p>
+      <ul>
+        <li><code>404 Not Found</code> — ticket does not exist.</li>
+        <li><code>409 Conflict</code> — ticket already closed.</li>
+        <li><code>403 Forbidden</code> — not a reviewer.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>5) Notes (Implementation Mapping)</h2>
+      <ul>
+        <li><strong>Current prototype:</strong> these “endpoints” can be implemented as internal Python functions (no real web server required).</li>
+        <li><strong>Discord integration:</strong> modal/button interactions trigger the relevant actions (create, update, close).</li>
+        <li><strong>Future expansion:</strong> a real REST API could enable a web dashboard, analytics, or external tooling.</li>
+      </ul>
+    </section>
+
+    <footer>
+      <div class="wrap">
+        <p>Document: <strong>Discord Ticket Bot — API Specification</strong></p>
+        <p class="muted">Tip: submit as HTML, or export/print to PDF if your uni prefers PDFs.</p>
+      </div>
+    </footer>
+
+  </main>
+</body>
+</html>
