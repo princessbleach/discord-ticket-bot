@@ -9,7 +9,7 @@
 
 **User Guide Link:** [here](https://github.com/princessbleach/discord-ticket-bot/blob/main/Manual.Md)
 
-**Video Demonstration Link:** [here](https://raw.githubusercontent.com/princessbleach/Zoe-GPs-Writeup/refs/heads/main/TicketDemo.gif)
+**Video Demonstration Link:** [here]([https://raw.githubusercontent.com/princessbleach/Zoe-GPs-Writeup/refs/heads/main/TicketDemo.gif](https://raw.githubusercontent.com/princessbleach/Zoe-GPs-Writeup/refs/heads/main/Images/TicketDemo.gif)
 
 **Api:** [here](https://github.com/princessbleach/discord-ticket-bot/blob/main/ticket-bot-api.html)
 
