@@ -91,3 +91,8 @@ pip install -r requirements.txt
 sudo systemctl restart ticketbot
 ```
 Logs will also need to be checked weekly for errors.
+
+### AI Declaration
+
+- Helping structure and refine sections of this written report
+- Aiding research
