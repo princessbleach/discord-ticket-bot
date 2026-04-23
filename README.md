@@ -17,10 +17,10 @@
 
 ## Abstract
 
-This project documents the design and development of a Discord-based ticketing system created using Python and the `discord.py` framework.  
-The primary objective was to produce a lightweight, privacy-aware support workflow suitable for our game enabling structured issue reporting directly within Discord.
+This project documents the design and development of a Discord-based ticketing system created using Python (2024) and the `discord.py` framework.  
+The primary objective was to produce a lightweight, privacy-aware support workflow suitable for our game enabling structured issue reporting directly within Discord (2024).
 
-The final system allows users to submit tickets through an interactive button that opens a form requesting a subject, GitHub branch, detailed description, and optional media links. Submitted reports are automatically forwarded to a private staff-only review channel with role-based access control.  
+The final system allows users to submit tickets through an interactive button that opens a form requesting a subject, GitHub (2024) branch, detailed description, and optional media links. Submitted reports are automatically forwarded to a private staff-only review channel with role-based access control.  
 This approach reduces server clutter, improves clarity of bug reports, and supports maintainable long-term deployment on a Linux server.
 
 ---
@@ -44,7 +44,7 @@ Discord’s official developer documentation provides authoritative technical gu
 
 
 **Evaluation:**  
-Highly reliable and indispensable for correct system implementation, though assumes prior programming familiarity.
+Highly reliable for correct system implementation, though assumes prior programming experience.
 
 ---
 
@@ -122,7 +122,6 @@ Key issues encountered:
 - Python version differences between macOS and Ubuntu  
 - Restricted package installation on shared Linux infrastructure  
 
-All were resolved through debugging, documentation consultation, and configuration refinement.
 
 ---
 
@@ -163,3 +162,29 @@ Goals included:
 
 
 ---
+
+### Bibliography
+
+Discord (2024) Discord Developer Documentation. Available at: https://discord.com/developers/docs/intro 
+
+GitHub (2024) GitHub Documentation. Available at: https://docs.github.com/en 
+
+Python (2024) Python 3 Documentation. Available at: https://docs.python.org/3/ 
+
+Ubuntu (2024) Ubuntu Server Guide. Available at: https://ubuntu.com/server/docs 
+
+Discord (2024) Discord. Available at: https://discord.com/ 
+
+GitHub (2024) GitHub. Available at: https://github.com/ 
+
+Python (2024) Python. Available at: https://www.python.org/ 
+
+Ubuntu (2024) Ubuntu. Available at: https://ubuntu.com/
+
+### AI Declaration
+
+- This task utilised AI tools to support aspects of development and documentation.
+- AI assistance was used in the following ways:
+- Supporting debugging and problem-solving during development of the Discord bot
+- Assisting with code structure and implementation using Python and discord.py
+- Helping structure and refine sections of this written report
